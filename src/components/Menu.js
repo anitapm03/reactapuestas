@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate } from 'react-router-dom';
 import logo from "../assets/images/logo2.png";
 import Global from "../Global";
 import axios from 'axios';
@@ -8,9 +8,13 @@ export default class Menu extends Component {
 
     urlApi = Global.urlApi;
 
+    cajaNombre = React.createRef();
+
     state = {
         equipos: [],
-        statusEquipos: false
+        statusEquipos: false,
+        buscar:false,
+        nombre: ""
     }
 
     componentDidMount = () => {
@@ -27,8 +31,19 @@ export default class Menu extends Component {
             })
         })
 
-
     }
+
+    buscarJugador = (e) => {
+        e.preventDefault();
+
+       this.setState({
+            nombre: this.cajaNombre.current.value,
+            buscar:true   
+       })
+
+        
+    }
+
   render() {
     return (
       <div>
@@ -56,6 +71,15 @@ export default class Menu extends Component {
 
                 <NavLink className="navbar-brand" to="/apuestas">Apuestas</NavLink>
                 <NavLink className="navbar-brand" to="/crearapuesta">Crear Apuesta</NavLink>
+
+                <form className="d-flex" role="search" onSubmit={this.buscarJugador}>
+                    <input className="form-control me-2" type="search" placeholder="Buscar jugador" aria-label="Search" ref={this.cajaNombre} />
+                    <button className="btn btn-outline-success" type="submit" >Buscar</button>
+                </form>
+                {
+                    this.state.buscar == true &&
+                    (<Navigate to={"/buscarjugador/" + this.state.nombre} />)
+                }
                 
             </div>
         </nav>
