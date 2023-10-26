@@ -9,7 +9,7 @@ export default class BuscarJugador extends Component {
     urlApi = Global.urlApi;
 
     state = {
-        jugador: {},
+        jugadores: [],
         status: false
     }
 
@@ -19,17 +19,20 @@ export default class BuscarJugador extends Component {
 
     loadJugador = () => {
 
-        var request = "api/Jugadores/BuscarJugadores/" + this.props.nombre;
+        var request = "api/jugadores/buscarjugadores/" + this.props.nombre;
 
         axios.get(this.urlApi+request).then(response => {
             this.setState({
-                jugador: response.data,
+                jugadores: response.data,
                 status: true
             })
-            
+           
         })
 
     }
+
+    //HAY QUE ARREGLARLO PORQUE NO DEVUELVE UN OBJ SINO QUE UN ARRAY, HAY QUE HACER UN MAP
+
   render() {
     return (
       <div className='position-absolute top-50 start-50 translate-middle '>
@@ -37,6 +40,7 @@ export default class BuscarJugador extends Component {
         {
             this.state.status == true ?
             (<div>
+                <h1>{this.state.jugadores[0].posicion}</h1>
                 <h2>{this.state.jugador.nombre}</h2>
                 <img src={this.state.jugador.imagen} style={{width:"150px", height: "150px"}} />
                 <h3>{this.state.jugador.posicion}</h3>
