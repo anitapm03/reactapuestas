@@ -34,14 +34,19 @@ export default class Menu extends Component {
     }
 
     buscarJugador = (e) => {
-        e.preventDefault();
-
-       this.setState({
-            nombre: this.cajaNombre.current.value,
-            buscar:true   
-       })
-
+        if (e!=null){
+            e.preventDefault();
+        }
         
+
+        if (this.cajaNombre.current.value != ""){
+            this.setState({
+                nombre: this.cajaNombre.current.value,
+                buscar:true   
+           })
+           this.cajaNombre.current.value = "";
+        }
+
     }
 
   render() {
@@ -74,7 +79,7 @@ export default class Menu extends Component {
 
                 <form className="d-flex" role="search" onSubmit={this.buscarJugador}>
                     <input className="form-control me-2" type="search" placeholder="Buscar jugador" aria-label="Search" ref={this.cajaNombre} />
-                    <button className="btn btn-outline-success" type="submit" >Buscar</button>
+                    <button className="btn btn-outline-success">Buscar</button>
                 </form>
                 {
                     this.state.buscar == true &&

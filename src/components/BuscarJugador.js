@@ -36,18 +36,24 @@ export default class BuscarJugador extends Component {
   render() {
     return (
       <div className='position-absolute top-50 start-50 translate-middle '>
+        <NavLink to="/" className='btn btn-outline-info'>Volver</NavLink>
         <h1>Detalles del jugador: {this.props.nombre}</h1>
         {
             this.state.status == true ?
-            (<div>
-                <h1>{this.state.jugadores[0].posicion}</h1>
-                <h2>{this.state.jugador.nombre}</h2>
-                <img src={this.state.jugador.imagen} style={{width:"150px", height: "150px"}} />
-                <h3>{this.state.jugador.posicion}</h3>
-                <h3>Fecha de nacimiento: {this.state.jugador.fechaNacimiemto}</h3>
-                <h5>País: {this.state.jugador.pais}</h5>
-                <NavLink to={"/"} className='btn btn-outline-info'>Volver</NavLink>
-            </div>):
+            (
+              this.state.jugadores.map((jugador, index) => {
+                return(
+                  <div key ={index}>
+                <h2>{jugador.nombre}</h2>
+                <img src={jugador.imagen} style={{width:"150px", height: "150px"}} />
+                <h3>{jugador.posicion}</h3>
+                <h3>Fecha de nacimiento: {jugador.fechaNacimiemto}</h3>
+                <h5>País: {jugador.pais}</h5>
+                
+            </div>
+                )
+              })
+            ):
             (<img src={loading} style={{with:"300px", height: "300px"}}/>)
         }
       </div>
